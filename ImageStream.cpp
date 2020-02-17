@@ -6,14 +6,13 @@
 #include <time.h>
 #include <process.h>
 #include <sys/timeb.h>
+#include <iostream>
 
 #include "include/WPMainCore.h"
 #include "include/CTMedia.h"
 #include "include/CTStream.h"
-#include "yuv-rgb-utils/rgb_yuv_utils.h"
-
-
-
+#include "yuv2rgb.h"
+#include "ImageStream.h"
 static unsigned __stdcall ThreadMainLoop(void *pParam);
 static int util_getTimeOfDay(struct timeval *ptv);
 
@@ -24,7 +23,8 @@ typedef struct _MainContext
 	void *pStreamer;
 }MainContext_t;
 
-int main(int argc, char *argv[])
+
+int main2(int argc, char *argv[])
 {
 	int ret;
 	MainContext_t MainCT;
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 		EncoderParams.BitRate = 8000;
 		ret = Roseek_MediaEncoder_CreateV1(&MainCT.pEncoder, &EncoderParams);
 		printf("Roseek_MediaEncoder_CreateV1 -> handle is %p, ret is %d\n", MainCT.pEncoder, ret);
-
+        /*
 		MainCT.pStreamer = Roseek_NetStreamer_Create(CT_STREAM_BY_RTSP);
 		if (MainCT.pStreamer)
 		{
@@ -74,8 +74,9 @@ int main(int argc, char *argv[])
 
 			ret = Roseek_NetStreamer_Listen(MainCT.pStreamer, 0, 8557);
 		}
-
+        */
 		MainCT.m_ThreadWatch = 1;
+        /*
 		hThreadMainLoop = (HANDLE)_beginthreadex(NULL, 0, ThreadMainLoop, (void*)&MainCT, 0, NULL);
 		if (hThreadMainLoop == NULL)
 		{
@@ -86,6 +87,7 @@ int main(int argc, char *argv[])
 		{
 			Sleep(1000);
 		}
+        */
 
 	} while (0);
 
@@ -127,7 +129,7 @@ typedef struct _RAWFrame
 	void			*pFrameBuff;
 }RAWFrame;
 
-static unsigned __stdcall ThreadMainLoop(void *pParam)
+void imageStreamThread(void *pParam)
 {
 	MainContext_t *pCT = (MainContext_t*)pParam;
 	int ret;
@@ -144,31 +146,47 @@ static unsigned __stdcall ThreadMainLoop(void *pParam)
 	Frame.pFrameBuff = malloc(FrameBuffSize);
 	pDestBuff = malloc(DestBuffSize);
 	int rgbaBuffSize = nWidth*nHeight*4*sizeof(unsigned char);
-	unsigned char* rgbaBuffer;
+    unsigned char* rgbaBuffer = new unsigned char[rgbaBuffSize];
+
+    int rgbBuffSize = nWidth*nHeight*4*sizeof(unsigned char);
+    unsigned char* rgbBuffer = new unsigned char[rgbBuffSize];
 	if (Frame.pFrameBuff == NULL || pDestBuff == NULL)
 	{
 		if (Frame.pFrameBuff) free(Frame.pFrameBuff);
 		if (pDestBuff) free(pDestBuff);
-		return 1;
-	}
-
-	while (pCT->m_ThreadWatch)
+        std::cout << "(Frame.pFrameBuff == NULL || pDestBuff == NULL" << std::endl;
+    }
+    std::cout << "gonna enter while loop" << std::endl;
+    while (true)
 	{
+        std::cout << "while" << std::endl;
 		Frame.FrameInfo.Size = sizeof(Frame.FrameInfo);
 		ret = Roseek_ImageAcquisition_FetchFrame(Frame.pFrameBuff, FrameBuffSize, &Frame.FrameInfo, 100);
 		if (ret == 0)
 		{
+            if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_YUV420SP)
+            {
+                //std::cout << "yuv420sp" << std::endl;
+            }
+            else if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_MONO)
+            {
+                std::cout << "mono" << std::endl;
+                std::exit(3);
+
+            }
 			if (Frame.FrameInfo.TriggerSource == 1)
 			{
-				printf("<%u>Continuous frame is come.\n", Frame.FrameInfo.FrameIndex);
+				//printf("<%u>Continuous frame is come.\n", Frame.FrameInfo.FrameIndex);
 			}
 			else
 			{
-				printf("<%u>Grab frame is come, source is 0x%x.\n", Frame.FrameInfo.FrameIndex, Frame.FrameInfo.TriggerSource);
+				//printf("<%u>Grab frame is come, source is 0x%x.\n", Frame.FrameInfo.FrameIndex, Frame.FrameInfo.TriggerSource);
 			}
-			nv21_to_rgba_init();
 			//nv21_to_rgba(yuv_buf,rgb_buf,width,height);
-    		nv21_to_abgr((unsigned char *) Frame.pFrameBuff,rgbaBuffer,nWidth,nHeight);
+            nv21_to_rgb((unsigned char *) Frame.pFrameBuff,rgbBuffer,nWidth,nHeight);
+            printf(".");
+            //printf("decoded yuv to rgba");
+
 			/*
 			if (pCT->pEncoder)
 			{
@@ -213,70 +231,5 @@ static unsigned __stdcall ThreadMainLoop(void *pParam)
 
 	free(Frame.pFrameBuff);
 	free(pDestBuff);
-
-	return 0;
-}
-
-static int util_getTimeOfDay(struct timeval *ptv)
-{
-#ifdef WIN32
-	// For Windoze, we need to implement our own gettimeofday()
-#if defined(_WIN32_WCE)
-	/* FILETIME of Jan 1 1970 00:00:00. */
-	static const unsigned __int64 epoch = 116444736000000000L;
-
-	FILETIME    file_time;
-	SYSTEMTIME  system_time;
-	ULARGE_INTEGER ularge;
-
-	GetSystemTime(&system_time);
-	SystemTimeToFileTime(&system_time, &file_time);
-	ularge.LowPart = file_time.dwLowDateTime;
-	ularge.HighPart = file_time.dwHighDateTime;
-
-	ptv->tv_sec = (long)((ularge.QuadPart - epoch) / 10000000L);
-	ptv->tv_usec = (long)(system_time.wMilliseconds * 1000);
-#else
-	static LARGE_INTEGER tickFrequency, epochOffset;
-
-	// For our first call, use "ftime()", so that we get a time with a proper epoch.
-	// For subsequent calls, use "QueryPerformanceCount()", because it's more fine-grain.
-	static int isFirstCall = 1;
-
-	LARGE_INTEGER tickNow;
-	QueryPerformanceCounter(&tickNow);
-
-	if (isFirstCall)
-	{
-		struct timeb tb;
-		ftime(&tb);
-		ptv->tv_sec = (long)(tb.time);
-		ptv->tv_usec = 1000 * tb.millitm;
-
-		// Also get our counter frequency:
-		QueryPerformanceFrequency(&tickFrequency);
-
-		// And compute an offset to add to subsequent counter times, so we get a proper epoch:
-		epochOffset.QuadPart
-			= tb.time*tickFrequency.QuadPart + (tb.millitm*tickFrequency.QuadPart) / 1000 - tickNow.QuadPart;
-
-		isFirstCall = 0; // for next time
-	}
-	else
-	{
-		// Adjust our counter time so that we get a proper epoch:
-		tickNow.QuadPart += epochOffset.QuadPart;
-
-		ptv->tv_sec = (long)(tickNow.QuadPart / tickFrequency.QuadPart);
-		ptv->tv_usec = (long)(((tickNow.QuadPart % tickFrequency.QuadPart) * 1000000L) / tickFrequency.QuadPart);
-	}
-
-	return 0;
-#endif
-
-#else
-
-	return gettimeofday(ptv, NULL);
-
-#endif		
+    std::cout << "finished decoder thread" << std::endl;
 }
