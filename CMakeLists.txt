@@ -12,11 +12,14 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Core Quick REQUIRED)
+include_directories(yuv-rgb-utils)
 
 add_executable(roosek2
   main.cpp
   qml.qrc
   DecodeH264AndStream.cpp
+  ImageStream.cpp
+  yuv-rgb-utils/rgb_yuv_utils.c
 )
 
 add_library(ctmedia_codec MODULE IMPORTED)

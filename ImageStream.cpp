@@ -7,19 +7,11 @@
 #include <process.h>
 #include <sys/timeb.h>
 
-#include "../../include/WPMainCore.h"
-#include "../../include/CTMedia.h"
-#include "../../include/CTStream.h"
+#include "include/WPMainCore.h"
+#include "include/CTMedia.h"
+#include "include/CTStream.h"
+#include "yuv-rgb-utils/rgb_yuv_utils.h"
 
-#ifdef _WIN64
-#pragma comment(lib, "../../lib/x64/WPMainCore.lib")
-#pragma comment(lib, "../../lib/x64/CTMedia.lib")
-#pragma comment(lib, "../../lib/x64/CTStream.lib")
-#else
-#pragma comment(lib, "../../lib/win32/WPMainCore.lib")
-#pragma comment(lib, "../../lib/win32/CTMedia.lib")
-#pragma comment(lib, "../../lib/win32/CTStream.lib")
-#endif
 
 
 static unsigned __stdcall ThreadMainLoop(void *pParam);
@@ -151,6 +143,8 @@ static unsigned __stdcall ThreadMainLoop(void *pParam)
 	DestBuffSize = nWidth*nHeight;
 	Frame.pFrameBuff = malloc(FrameBuffSize);
 	pDestBuff = malloc(DestBuffSize);
+	int rgbaBuffSize = nWidth*nHeight*4*sizeof(unsigned char);
+	unsigned char* rgbaBuffer;
 	if (Frame.pFrameBuff == NULL || pDestBuff == NULL)
 	{
 		if (Frame.pFrameBuff) free(Frame.pFrameBuff);
@@ -172,7 +166,10 @@ static unsigned __stdcall ThreadMainLoop(void *pParam)
 			{
 				printf("<%u>Grab frame is come, source is 0x%x.\n", Frame.FrameInfo.FrameIndex, Frame.FrameInfo.TriggerSource);
 			}
-
+			nv21_to_rgba_init();
+			//nv21_to_rgba(yuv_buf,rgb_buf,width,height);
+    		nv21_to_abgr((unsigned char *) Frame.pFrameBuff,rgbaBuffer,nWidth,nHeight);
+			/*
 			if (pCT->pEncoder)
 			{
 				if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_YUV420SP)
@@ -210,6 +207,7 @@ static unsigned __stdcall ThreadMainLoop(void *pParam)
 					printf("<%u>JPG encode failed, ret is %d.\n", Frame.FrameInfo.FrameIndex, ret);
 				}
 			}
+			*/
 		}
 	}
 
