@@ -159,7 +159,6 @@ void imageStreamThread(void *pParam)
     std::cout << "gonna enter while loop" << std::endl;
     while (true)
 	{
-        std::cout << "while" << std::endl;
 		Frame.FrameInfo.Size = sizeof(Frame.FrameInfo);
 		ret = Roseek_ImageAcquisition_FetchFrame(Frame.pFrameBuff, FrameBuffSize, &Frame.FrameInfo, 100);
 		if (ret == 0)
@@ -184,7 +183,7 @@ void imageStreamThread(void *pParam)
 			}
 			//nv21_to_rgba(yuv_buf,rgb_buf,width,height);
             nv21_to_rgb((unsigned char *) Frame.pFrameBuff,rgbBuffer,nWidth,nHeight);
-            printf(".");
+            std::cout << "." << std::flush;
             //printf("decoded yuv to rgba");
 
 			/*
