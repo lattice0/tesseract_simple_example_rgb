@@ -2,8 +2,8 @@
 
 void CameraView::updateImage(std::shared_ptr<QImage> qImage)
 {
-    this->qImage= qImage; // does shallow copy of image data
-    update();             // triggers actual update
+    this->qImage= qImage;
+    update();
 }
 
 void CameraView::paint(QPainter* painter)

@@ -19,6 +19,7 @@ add_executable(roosek2
   qml.qrc
   ImageStream.cpp
   yuv2rgb/yuv2rgb.cpp
+  CameraView.cpp
 )
 
 add_library(ctmedia_codec MODULE IMPORTED)

@@ -184,6 +184,7 @@ void imageStreamThread(void *pParam, std::function<void(uint8_t*, int, int)> rgb
 			//nv21_to_rgba(yuv_buf,rgb_buf,width,height);
             nv21_to_rgb((unsigned char *) Frame.pFrameBuff,rgbBuffer,nWidth,nHeight);
             std::cout << "." << std::flush;
+            rgbUpdateCallback(rgbBuffer, nWidth, nHeight);
             //printf("decoded yuv to rgba");
 
 			/*

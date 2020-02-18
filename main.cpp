@@ -10,8 +10,11 @@
 #include <time.h>
 #include <process.h>
 #include <sys/timeb.h>
+#include <QImage>
 #include "ImageStream.h"
+#include "CameraView.h"
 #include <chrono>
+#include <memory>
 
 #include "include/WPMainCore.h"
 #include "include/CTMedia.h"
@@ -78,12 +81,12 @@ int main(int argc, char **argv)
     QObject *rootObject = engine.rootObjects().first();
     QObject *qmlObject = rootObject->findChild<QObject*>("mainWindow");
     QObject *cameraViewQ = qmlObject->findChild<QObject*>("cameraView");
-    CameraView* cameraView = static_pointer_cast<CameraView>(cameraViewQ);
+    CameraView* cameraView = static_cast<CameraView*>(cameraViewQ);
 
     auto updateCameraView = [&cameraView](uint8_t* rgbBuffer, int width, int height) {
-        std::shared_ptr<QImage> qImage = std::make_shared<QImage>(rgbBuffer, width, height, QImage::Format_Indexed8)
-        cameraView->updateImae(qImage);
-    }
+        std::shared_ptr<QImage> qImage = std::make_shared<QImage>(rgbBuffer, width, height, QImage::Format_Indexed8);
+        cameraView->updateImage(qImage);
+    };
     std::thread decoder(imageStreamThread, (void*)&MainCT, updateCameraView);
 
     return app.exec();

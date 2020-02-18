@@ -12,9 +12,8 @@ class CameraView : public QQuickPaintedItem
 
 public:
     CameraView(QQuickItem* parent = nullptr);
-    void updateImage(const QImage&);
+    void updateImage(std::shared_pointer<QImage>);
 public slots:
-    
     void paint(QPainter *painter) override;
 
 protected:
