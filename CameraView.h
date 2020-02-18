@@ -12,7 +12,9 @@ class CameraView : public QQuickPaintedItem
     Q_DISABLE_COPY(CameraView)
 
 public:
-    CameraView(QQuickItem* parent = nullptr);
+    CameraView(QQuickItem* parent = nullptr) {
+
+    }
     void updateImage(std::shared_ptr<QImage> qImage);
 public slots:
     void paint(QPainter *painter) override;

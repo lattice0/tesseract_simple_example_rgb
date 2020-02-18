@@ -1,5 +1,6 @@
 #include "CameraView.h"
 
+
 void CameraView::updateImage(std::shared_ptr<QImage> qImage)
 {
     this->qImage= qImage;
