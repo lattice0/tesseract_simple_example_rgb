@@ -4,6 +4,7 @@
 #include <QQuickPaintedItem>
 #include <QImage>
 #include <QPainter>
+#include <memory>
 
 class CameraView : public QQuickPaintedItem
 {
