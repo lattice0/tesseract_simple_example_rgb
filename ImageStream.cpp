@@ -150,7 +150,7 @@ void imageStreamThread(void *pParam, std::function<void(uint8_t*, int, int)> rgb
     unsigned char* rgbaBuffer = new unsigned char[rgbaBuffSize];
 
     int rgbBuffSize = nWidth*nHeight*3*sizeof(unsigned char);
-    unsigned char* rgbBuffer = new unsigned char[rgbBuffSize];
+    
 	if (Frame.pFrameBuff == NULL || pDestBuff == NULL)
 	{
 		if (Frame.pFrameBuff) free(Frame.pFrameBuff);
@@ -183,6 +183,8 @@ void imageStreamThread(void *pParam, std::function<void(uint8_t*, int, int)> rgb
 				//printf("<%u>Grab frame is come, source is 0x%x.\n", Frame.FrameInfo.FrameIndex, Frame.FrameInfo.TriggerSource);
 			}
 			//nv21_to_rgba(yuv_buf,rgb_buf,width,height);
+			//TODO: ATTENTION: delete this or make container for it
+			unsigned char* rgbBuffer = new unsigned char[rgbBuffSize];
             nv21_to_rgb((unsigned char *) Frame.pFrameBuff,rgbBuffer,nWidth,nHeight);
             std::cout << "." << std::flush;
             rgbUpdateCallback(rgbBuffer, nWidth, nHeight);
@@ -227,8 +229,7 @@ void imageStreamThread(void *pParam, std::function<void(uint8_t*, int, int)> rgb
 				}
 			}
 			*/
-			std::chrono::milliseconds timespan(3000); // or whatever
-    		std::this_thread::sleep_for(timespan);
+			
 		}
 	}
 
