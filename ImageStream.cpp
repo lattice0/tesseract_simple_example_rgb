@@ -7,6 +7,7 @@
 #include <process.h>
 #include <sys/timeb.h>
 #include <iostream>
+#include <thread>
 
 #include "include/WPMainCore.h"
 #include "include/CTMedia.h"
@@ -148,7 +149,7 @@ void imageStreamThread(void *pParam, std::function<void(uint8_t*, int, int)> rgb
 	int rgbaBuffSize = nWidth*nHeight*4*sizeof(unsigned char);
     unsigned char* rgbaBuffer = new unsigned char[rgbaBuffSize];
 
-    int rgbBuffSize = nWidth*nHeight*4*sizeof(unsigned char);
+    int rgbBuffSize = nWidth*nHeight*3*sizeof(unsigned char);
     unsigned char* rgbBuffer = new unsigned char[rgbBuffSize];
 	if (Frame.pFrameBuff == NULL || pDestBuff == NULL)
 	{
@@ -226,6 +227,8 @@ void imageStreamThread(void *pParam, std::function<void(uint8_t*, int, int)> rgb
 				}
 			}
 			*/
+			std::chrono::milliseconds timespan(3000); // or whatever
+    		std::this_thread::sleep_for(timespan);
 		}
 	}
 

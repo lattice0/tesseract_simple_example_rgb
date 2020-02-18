@@ -93,11 +93,8 @@ int main(int argc, char **argv)
 
 
     auto updateCameraView = [&cameraView](uint8_t* rgbBuffer, int width, int height) {
-        auto callUpdateOnMainThread = [&cameraView](std::shared_ptr<QImage> qImage) {
-            cameraView->updateImage(qImage);
-        };
         std::cout << "gonna update image" << std::endl;
-        std::shared_ptr<QImage> qImage = std::make_shared<QImage>(rgbBuffer, width, height, QImage::Format_Indexed8);
+        std::shared_ptr<QImage> qImage = std::make_shared<QImage>(rgbBuffer, width, height, QImage::Format_RGB888);
         cameraView->updateImage(qImage);
         QMetaObject::invokeMethod(cameraView, "update", Qt::QueuedConnection);
         std::cout << "updated image" << std::endl;
