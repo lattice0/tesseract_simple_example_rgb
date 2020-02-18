@@ -33,7 +33,6 @@ int main(int argc, char **argv)
     float FrameRate;
     MediaEncoderParamsV1 EncoderParams;
 
-
     memset(&MainCT, 0, sizeof(MainCT));
 
     ret = Roseek_MainCore_Init(0);
@@ -64,12 +63,10 @@ int main(int argc, char **argv)
     EncoderParams.BitRate = 8000;
     ret = Roseek_MediaEncoder_CreateV1(&MainCT.pEncoder, &EncoderParams);
 
-    std::thread decoder(imageStreamThread, (void*)&MainCT);
-    /*
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
-
+    qmlRegisterType<CameraView>("com.lucaszanella.com.camera_view", 1, 0, "CameraView");
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -78,9 +75,19 @@ int main(int argc, char **argv)
                 QCoreApplication::exit(-1);
         }, Qt::QueuedConnection);
     engine.load(url);
+    QObject *rootObject = engine.rootObjects().first();
+    QObject *qmlObject = rootObject->findChild<QObject*>("mainWindow");
+    QObject *cameraViewQ = qmlObject->findChild<QObject*>("cameraView");
+    CameraView* cameraView = static_pointer_cast<CameraView>(cameraViewQ);
+
+    auto updateCameraView = [&cameraView](uint8_t* rgbBuffer, int width, int height) {
+        std::shared_ptr<QImage> qImage = std::make_shared<QImage>(rgbBuffer, width, height, QImage::Format_Indexed8)
+        cameraView->updateImae(qImage);
+    }
+    std::thread decoder(imageStreamThread, (void*)&MainCT, updateCameraView);
 
     return app.exec();
-    */
+    
     std::chrono::milliseconds timespan(111605); // or whatever
 
     std::this_thread::sleep_for(timespan);

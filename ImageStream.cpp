@@ -129,7 +129,7 @@ typedef struct _RAWFrame
 	void			*pFrameBuff;
 }RAWFrame;
 
-void imageStreamThread(void *pParam)
+void imageStreamThread(void *pParam, std::function<void(uint8_t*, int, int)> rgbUpdateCallback)
 {
 	MainContext_t *pCT = (MainContext_t*)pParam;
 	int ret;

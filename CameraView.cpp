@@ -1,12 +1,12 @@
 #include "CameraView.h"
 
-void CameraView::updateImage(const QImage& image)
+void CameraView::updateImage(std::shared_ptr<QImage> qImage)
 {
-    m_imageThumb = image; // does shallow copy of image data
+    this->qImage= qImage; // does shallow copy of image data
     update();             // triggers actual update
 }
 
 void CameraView::paint(QPainter* painter)
 {
-    painter->drawImage(this->boundingRect(), m_image);
+    painter->drawImage(this->boundingRect(), *qImage);
 }

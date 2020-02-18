@@ -1,5 +1,9 @@
 #ifndef CAMERA_VIEW_H
 #define CAMERA_VIEW_H
+#include <QObject>
+#include <QQuickPaintedItem>
+#include <QImage>
+#include <QPainter>
 
 class CameraView : public QQuickPaintedItem
 {
@@ -8,12 +12,13 @@ class CameraView : public QQuickPaintedItem
 
 public:
     CameraView(QQuickItem* parent = nullptr);
-
-public slots:
     void updateImage(const QImage&);
+public slots:
+    
+    void paint(QPainter *painter) override;
 
 protected:
-    QImage m_image;
+    std::shared_ptr<QImage> qImage;
 };
 
 #endif //CAMERA_VIEW_H
