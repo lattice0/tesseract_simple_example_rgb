@@ -69,7 +69,7 @@ int main(int argc, char **argv)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
-    qmlRegisterType<CameraView>("com.lucaszanella.com.camera_view", 1, 0, "CameraView");
+    qmlRegisterType<CameraView>("com.lucaszanella.camera_view", 1, 0, "CameraView");
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -79,13 +79,28 @@ int main(int argc, char **argv)
         }, Qt::QueuedConnection);
     engine.load(url);
     QObject *rootObject = engine.rootObjects().first();
-    QObject *qmlObject = rootObject->findChild<QObject*>("mainWindow");
-    QObject *cameraViewQ = qmlObject->findChild<QObject*>("cameraView");
+    QObject *mainWindow = rootObject->findChild<QObject*>("mainWindow");
+    if (!mainWindow) {
+        std::cout << "mainWindow not found" << std::endl;
+        //std::exit(1);
+    } 
+    QObject *cameraViewQ = rootObject->findChild<QObject*>("cameraView");
+    if (!cameraViewQ) {
+        std::cout << "cameraViewQ not found" << std::endl;
+        std::exit(1);
+    } 
     CameraView* cameraView = static_cast<CameraView*>(cameraViewQ);
 
+
     auto updateCameraView = [&cameraView](uint8_t* rgbBuffer, int width, int height) {
+        auto callUpdateOnMainThread = [&cameraView](std::shared_ptr<QImage> qImage) {
+            cameraView->updateImage(qImage);
+        };
+        std::cout << "gonna update image" << std::endl;
         std::shared_ptr<QImage> qImage = std::make_shared<QImage>(rgbBuffer, width, height, QImage::Format_Indexed8);
         cameraView->updateImage(qImage);
+        QMetaObject::invokeMethod(cameraView, "update", Qt::QueuedConnection);
+        std::cout << "updated image" << std::endl;
     };
     std::thread decoder(imageStreamThread, (void*)&MainCT, updateCameraView);
 

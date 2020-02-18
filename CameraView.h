@@ -5,7 +5,7 @@
 #include <QImage>
 #include <QPainter>
 #include <memory>
-
+#include <mutex>
 class CameraView : public QQuickPaintedItem
 {
     Q_OBJECT
@@ -21,6 +21,7 @@ public slots:
 
 protected:
     std::shared_ptr<QImage> qImage;
+    std::mutex qImageMutex;
 };
 
 #endif //CAMERA_VIEW_H
