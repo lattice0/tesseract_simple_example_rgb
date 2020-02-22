@@ -11,7 +11,7 @@ class SimpleBuffer{
     }
     ~SimpleBuffer() {
         if (t) {
-            //delete[] t;
+            delete[] t;
         }
     }
     T* data() {
