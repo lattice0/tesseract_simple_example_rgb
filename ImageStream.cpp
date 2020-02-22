@@ -16,6 +16,7 @@
 #include "yuv2rgb.h"
 #include "ImageStream.h"
 #include "SimpleBuffer.h"
+#include "YuvUtils.h"
 
 static unsigned __stdcall ThreadMainLoop(void *pParam);
 static int util_getTimeOfDay(struct timeval *ptv);
@@ -25,7 +26,7 @@ typedef struct _MainContext
 	int m_ThreadWatch;
 	void *pEncoder;
 	void *pStreamer;
-}MainContext_t;
+} MainContext_t;
 
 int main2(int argc, char *argv[])
 {
@@ -68,7 +69,7 @@ int main2(int argc, char *argv[])
 		EncoderParams.BitRate = 8000;
 		ret = Roseek_MediaEncoder_CreateV1(&MainCT.pEncoder, &EncoderParams);
 		printf("Roseek_MediaEncoder_CreateV1 -> handle is %p, ret is %d\n", MainCT.pEncoder, ret);
-        /*
+		/*
 		MainCT.pStreamer = Roseek_NetStreamer_Create(CT_STREAM_BY_RTSP);
 		if (MainCT.pStreamer)
 		{
@@ -79,7 +80,7 @@ int main2(int argc, char *argv[])
 		}
         */
 		MainCT.m_ThreadWatch = 1;
-        /*
+		/*
 		hThreadMainLoop = (HANDLE)_beginthreadex(NULL, 0, ThreadMainLoop, (void*)&MainCT, 0, NULL);
 		if (hThreadMainLoop == NULL)
 		{
@@ -128,58 +129,65 @@ int main2(int argc, char *argv[])
 
 typedef struct _RAWFrame
 {
-	RawFrameInfo	FrameInfo;
-	void			*pFrameBuff;
-}RAWFrame;
+	RawFrameInfo FrameInfo;
+	void *pFrameBuff;
+} RAWFrame;
 
 void imageStreamThread(void *pParam, std::function<void(std::unique_ptr<SimpleRoseekBuffer>, int, int)> rgbUpdateCallback)
 {
-	MainContext_t *pCT = (MainContext_t*)pParam;
+	MainContext_t *pCT = (MainContext_t *)pParam;
 	int ret;
 	UINT32 nWidth, nHeight, FrameBuffSize, DestBuffSize, InOutSize, TickBegin, TickEnd;
 	RAWFrame Frame;
 	void *pDestBuff = NULL;
-	UINT8 *pSrcData[4] = { 0 };
+	UINT8 *pSrcData[4] = {0};
 	CT_IMAGE_FRAME BitsFrame;
 	struct timeval timestamp;
 
 	Roseek_ImageAcquisition_GetResolution(NULL, NULL, NULL, &nWidth, &nHeight);
-	FrameBuffSize = nWidth*nHeight * 3;
-	DestBuffSize = nWidth*nHeight;
+	FrameBuffSize = nWidth * nHeight * 3;
+	DestBuffSize = nWidth * nHeight;
 	Frame.pFrameBuff = malloc(FrameBuffSize);
 	pDestBuff = malloc(DestBuffSize);
-	int rgbaBuffSize = nWidth*nHeight*4*sizeof(unsigned char);
-    //unsigned char* rgbaBuffer = new unsigned char[rgbaBuffSize];
+	int rgbaBuffSize = nWidth * nHeight * 4 * sizeof(unsigned char);
+	//unsigned char* rgbaBuffer = new unsigned char[rgbaBuffSize];
 
-    int rgbBufferSize = nWidth*nHeight*3*sizeof(unsigned char);
-    
+	int rgbBufferSize = nWidth * nHeight * 3 * sizeof(unsigned char);
+
 	if (Frame.pFrameBuff == NULL || pDestBuff == NULL)
 	{
-		if (Frame.pFrameBuff) free(Frame.pFrameBuff);
-		if (pDestBuff) free(pDestBuff);
-        std::cout << "(Frame.pFrameBuff == NULL || pDestBuff == NULL" << std::endl;
-    }
-    std::cout << "gonna enter while loop" << std::endl;
-    while (true)
+		if (Frame.pFrameBuff)
+			free(Frame.pFrameBuff);
+		if (pDestBuff)
+			free(pDestBuff);
+		std::cout << "(Frame.pFrameBuff == NULL || pDestBuff == NULL" << std::endl;
+	}
+	std::cout << "gonna enter while loop" << std::endl;
+	while (true)
 	{
 		Frame.FrameInfo.Size = sizeof(Frame.FrameInfo);
 		ret = Roseek_ImageAcquisition_FetchFrame(Frame.pFrameBuff, FrameBuffSize, &Frame.FrameInfo, 100);
 		if (ret == 0)
 		{
-            if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_YUV420SP)
-            {
-                std::cout << "yuv420sp" << std::endl;
-                //std::exit(3);
-            } else if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_YUV422SP ) {
-                //std::cout << "yuv422sp" << std::endl;
-                //std::exit(3);
-            }
-            else if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_MONO)
-            {
-                std::cout << "mono" << std::endl;
-                std::exit(3);
+			std::unique_ptr<SimpleRoseekBuffer> rgbBuffer = std::make_unique<SimpleRoseekBuffer>(rgbBufferSize);
+			if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_YUV420SP)
+			{
+				Yuv420SPToRgb24((unsigned char *)Frame.pFrameBuff, rgbBuffer->data(), nWidth, nHeight);
+			}
+			else if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_YUV422SP)
+			{
+				Yuv422SPToRgb24((unsigned char *)Frame.pFrameBuff, rgbBuffer->data(), nWidth, nHeight);
+			}
+			else if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_BGR24)
+			{
+				memcpy(pBufRender, pFrame->pFrameBuff, pThis->m_nVideoWidth * pThis->m_nVideoHeight * 3);
+			}
+			else if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_MONO)
+			{
+				memset((char *)pFrame->pFrameBuff + pThis->m_nVideoWidth * pThis->m_nVideoHeight, 128, pThis->m_nVideoWidth * pThis->m_nVideoHeight / 2);
+				Yuv420SPToRgb24((unsigned char *)Frame.pFrameBuff, rgbBuffer->data(), nWidth, nHeight);
+			}
 
-            }
 			if (Frame.FrameInfo.TriggerSource == 1)
 			{
 				//printf("<%u>Continuous frame is come.\n", Frame.FrameInfo.FrameIndex);
@@ -188,18 +196,16 @@ void imageStreamThread(void *pParam, std::function<void(std::unique_ptr<SimpleRo
 			{
 				//printf("<%u>Grab frame is come, source is 0x%x.\n", Frame.FrameInfo.FrameIndex, Frame.FrameInfo.TriggerSource);
 			}
-			//nv21_to_rgba(yuv_buf,rgb_buf,width,height);
-			//TODO: ATTENTION: delete this or make container for it
-            //unsigned char* rgbBuffer = new unsigned char[rgbBuffSize];
-            std::unique_ptr<SimpleRoseekBuffer> rgbBuffer = std::make_unique<SimpleRoseekBuffer>(rgbBufferSize);
-            nv21_to_rgb((unsigned char *) Frame.pFrameBuff, rgbBuffer->data(), nWidth, nHeight);
-            unsigned char* d = rgbBuffer->data();
-            for (int i=0; i<FrameBuffSize; i++) {
-               //*(d + i) = *((unsigned char* )Frame.pFrameBuff + i);
-            }
-            std::cout << "." << std::flush;
-            rgbUpdateCallback(std::move(rgbBuffer), nWidth, nHeight);
-            //printf("decoded yuv to rgba");
+
+			//nv21_to_rgb((unsigned char *)Frame.pFrameBuff, rgbBuffer->data(), nWidth, nHeight);
+			unsigned char *d = rgbBuffer->data();
+			for (int i = 0; i < FrameBuffSize; i++)
+			{
+				//*(d + i) = *((unsigned char* )Frame.pFrameBuff + i);
+			}
+			std::cout << "." << std::flush;
+			rgbUpdateCallback(std::move(rgbBuffer), nWidth, nHeight);
+			//printf("decoded yuv to rgba");
 
 			/*
 			if (pCT->pEncoder)
@@ -240,11 +246,10 @@ void imageStreamThread(void *pParam, std::function<void(std::unique_ptr<SimpleRo
 				}
 			}
 			*/
-			
 		}
 	}
 
 	free(Frame.pFrameBuff);
 	free(pDestBuff);
-    std::cout << "finished decoder thread" << std::endl;
+	std::cout << "finished decoder thread" << std::endl;
 }
