@@ -9,7 +9,7 @@ void CameraView::updateImage(std::unique_ptr<SimpleRoseekBuffer> simpleRoseekBuf
     //Holds buffer too so it automatially deletes it when the buffer is replaced by another
     unsigned char* t = simpleRoseekBuffer->data();
     for (int i=0; i<width*height*3; i+=3) {
-       *(t+i) = 255;
+       //*(t+i) = 255;
         //std::cout << i << " " << std::flush;
     }
     this->qImage = QImage(simpleRoseekBuffer->data(), width, height, format);
@@ -18,12 +18,12 @@ void CameraView::updateImage(std::unique_ptr<SimpleRoseekBuffer> simpleRoseekBuf
 
 void CameraView::paint(QPainter* painter)
 {
-    std::cout << "gonna paint" << std::endl;
+    //std::cout << "gonna paint" << std::endl;
     std::unique_lock<std::mutex> lk{qImageMutex};
     //Qt can call update rigth at the beggining when there's no image setted
 
     if (simpleRoseekBuffer) {
         painter->drawImage(this->boundingRect(), qImage);
     }
-    std::cout << "painted" << std::endl;
+    //std::cout << "painted" << std::endl;
 }

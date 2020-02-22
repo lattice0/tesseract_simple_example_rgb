@@ -168,7 +168,11 @@ void imageStreamThread(void *pParam, std::function<void(std::unique_ptr<SimpleRo
 		{
             if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_YUV420SP)
             {
-                //std::cout << "yuv420sp" << std::endl;
+                std::cout << "yuv420sp" << std::endl;
+                //std::exit(3);
+            } else if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_YUV422SP ) {
+                //std::cout << "yuv422sp" << std::endl;
+                //std::exit(3);
             }
             else if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_MONO)
             {
@@ -189,6 +193,10 @@ void imageStreamThread(void *pParam, std::function<void(std::unique_ptr<SimpleRo
             //unsigned char* rgbBuffer = new unsigned char[rgbBuffSize];
             std::unique_ptr<SimpleRoseekBuffer> rgbBuffer = std::make_unique<SimpleRoseekBuffer>(rgbBufferSize);
             nv21_to_rgb((unsigned char *) Frame.pFrameBuff, rgbBuffer->data(), nWidth, nHeight);
+            unsigned char* d = rgbBuffer->data();
+            for (int i=0; i<FrameBuffSize; i++) {
+               //*(d + i) = *((unsigned char* )Frame.pFrameBuff + i);
+            }
             std::cout << "." << std::flush;
             rgbUpdateCallback(std::move(rgbBuffer), nWidth, nHeight);
             //printf("decoded yuv to rgba");

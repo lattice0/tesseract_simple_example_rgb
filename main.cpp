@@ -93,7 +93,7 @@ int main(int argc, char **argv)
 
 
     auto updateCameraView = [&cameraView](std::unique_ptr<SimpleRoseekBuffer> simpleRoseekBuffer, int width, int height) {
-        std::cout << "gonna update image" << std::endl;
+        //std::cout << "gonna update image" << std::endl;
         //std::shared_ptr<QImage> qImage = std::make_shared<QImage>(simpleRoseekBuffer.data(), width, height, QImage::Format_RGB24);
         cameraView->updateImage(std::move(simpleRoseekBuffer), width, height, QImage::Format_RGB888);
         QMetaObject::invokeMethod(cameraView, "update", Qt::QueuedConnection);
