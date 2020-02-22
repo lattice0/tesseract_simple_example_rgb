@@ -172,7 +172,8 @@ void imageStreamThread(void *pParam, std::function<void(std::unique_ptr<SimpleRo
 			std::unique_ptr<SimpleRoseekBuffer> rgbBuffer = std::make_unique<SimpleRoseekBuffer>(rgbBufferSize);
 			if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_YUV420SP)
 			{
-				Yuv420SPToRgb24((unsigned char *)Frame.pFrameBuff, rgbBuffer->data(), nWidth, nHeight);
+                Yuv420SPToRgb24((unsigned char *)Frame.pFrameBuff, rgbBuffer->data(), nWidth, nHeight);
+                //exit(3);
 			}
 			else if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_YUV422SP)
 			{
@@ -180,12 +181,12 @@ void imageStreamThread(void *pParam, std::function<void(std::unique_ptr<SimpleRo
 			}
 			else if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_BGR24)
 			{
-				memcpy(pBufRender, pFrame->pFrameBuff, pThis->m_nVideoWidth * pThis->m_nVideoHeight * 3);
+                memcpy((unsigned char *)Frame.pFrameBuff, rgbBuffer->data(), nWidth*nHeight*3);
 			}
 			else if (Frame.FrameInfo.ImageFormat == WP_RAWIMAGE_FORMAT_MONO)
 			{
-				memset((char *)pFrame->pFrameBuff + pThis->m_nVideoWidth * pThis->m_nVideoHeight, 128, pThis->m_nVideoWidth * pThis->m_nVideoHeight / 2);
-				Yuv420SPToRgb24((unsigned char *)Frame.pFrameBuff, rgbBuffer->data(), nWidth, nHeight);
+                //memset((char *)pFrame->pFrameBuff + pThis->m_nVideoWidth * pThis->m_nVideoHeight, 128, pThis->m_nVideoWidth * pThis->m_nVideoHeight / 2);
+                //Yuv420SPToRgb24((unsigned char *)Frame.pFrameBuff, rgbBuffer->data(), nWidth, nHeight);
 			}
 
 			if (Frame.FrameInfo.TriggerSource == 1)
@@ -203,6 +204,11 @@ void imageStreamThread(void *pParam, std::function<void(std::unique_ptr<SimpleRo
 			{
 				//*(d + i) = *((unsigned char* )Frame.pFrameBuff + i);
 			}
+            for (int i=0; i<nWidth*nHeight*3; i+=3) {
+               //*(d+i) = 255;
+                //d[i] = 255;
+                //std::cout << i << " " << std::flush;
+            }
 			std::cout << "." << std::flush;
 			rgbUpdateCallback(std::move(rgbBuffer), nWidth, nHeight);
 			//printf("decoded yuv to rgba");

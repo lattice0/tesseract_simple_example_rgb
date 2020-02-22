@@ -8,8 +8,8 @@ int Yuv444ToYV12(unsigned char * pSrc, unsigned char * pDest, unsigned int width
 void yuv2rgb_init();
 int Yuv422SPToRgb24(unsigned char * pSrc, unsigned char * pDest, unsigned int width, unsigned int height);
 int Yuv420SPToRgb24(unsigned char * pSrc, unsigned char * pDest, unsigned int width, unsigned int height);
-int WriteRgb24ToBmpFile(unsigned char * pData, unsigned int nWidth, unsigned int nHeight, char *pFilePath);
-int WriteMonoToBmpFile(unsigned char * pData, unsigned int nWidth, unsigned int nHeight, char *pFilePath);
+//int WriteRgb24ToBmpFile(unsigned char * pData, unsigned int nWidth, unsigned int nHeight, char *pFilePath);
+//int WriteMonoToBmpFile(unsigned char * pData, unsigned int nWidth, unsigned int nHeight, char *pFilePath);
 enum
 {
 	RAW_GBRG,

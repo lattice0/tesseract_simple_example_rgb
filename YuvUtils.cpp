@@ -330,10 +330,9 @@ int Yuv420SPToRgb24(unsigned char * pSrc, unsigned char * pDest, unsigned int wi
 			pRGB += 6;
 		}
 	}
-
 	return 0;
 }
-
+/*
 int WriteRgb24ToBmpFile(unsigned char * pData, unsigned int nWidth, unsigned int nHeight, char *pFilePath)
 {
 	BITMAPFILEHEADER bmpfh;
@@ -364,7 +363,7 @@ int WriteRgb24ToBmpFile(unsigned char * pData, unsigned int nWidth, unsigned int
 
 	return 0;
 }
-
+*/
 int RawToRgb24(unsigned char * pSrc, unsigned int RawFormat, unsigned char * pDest, unsigned int width, unsigned int height)
 {
 	unsigned int i, j;
@@ -480,7 +479,7 @@ int RawToRgb24(unsigned char * pSrc, unsigned int RawFormat, unsigned char * pDe
 
 	return 0;
 }
-
+/*
 static BOOL bPaletteInit = FALSE;
 static RGBQUAD rgbPalette[256] = { 0 };
 int WriteMonoToBmpFile(unsigned char * pData, unsigned int nWidth, unsigned int nHeight, char *pFilePath)
@@ -526,5 +525,7 @@ int WriteMonoToBmpFile(unsigned char * pData, unsigned int nWidth, unsigned int 
 	}
 
 	return 0;
+
 }
+*/
 

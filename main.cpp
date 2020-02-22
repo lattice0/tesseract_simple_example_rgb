@@ -19,6 +19,7 @@
 #include "include/WPMainCore.h"
 #include "include/CTMedia.h"
 #include "include/CTStream.h"
+#include "YuvUtils.h"
 
 typedef struct _MainContext
 {
@@ -91,7 +92,7 @@ int main(int argc, char **argv)
     } 
     CameraView* cameraView = static_cast<CameraView*>(cameraViewQ);
 
-
+    yuv2rgb_init();
     auto updateCameraView = [&cameraView](std::unique_ptr<SimpleRoseekBuffer> simpleRoseekBuffer, int width, int height) {
         //std::cout << "gonna update image" << std::endl;
         //std::shared_ptr<QImage> qImage = std::make_shared<QImage>(simpleRoseekBuffer.data(), width, height, QImage::Format_RGB24);
