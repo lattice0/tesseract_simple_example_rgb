@@ -7,6 +7,11 @@ void CameraView::updateImage(std::unique_ptr<SimpleRoseekBuffer> simpleRoseekBuf
 {
     std::unique_lock<std::mutex> lk{qImageMutex};
     //Holds buffer too so it automatially deletes it when the buffer is replaced by another
+    unsigned char* t = simpleRoseekBuffer->data();
+    for (int i=0; i<width*height*3; i+=3) {
+       *(t+i) = 255;
+        //std::cout << i << " " << std::flush;
+    }
     this->qImage = QImage(simpleRoseekBuffer->data(), width, height, format);
     this->simpleRoseekBuffer= std::move(simpleRoseekBuffer);
 }
