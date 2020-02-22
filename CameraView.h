@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <memory>
 #include <mutex>
+#include "SimpleBuffer.h"
 class CameraView : public QQuickPaintedItem
 {
     Q_OBJECT
@@ -15,12 +16,13 @@ public:
     CameraView(QQuickItem* parent = nullptr) {
 
     }
-    void updateImage(std::shared_ptr<QImage> qImage);
+    void updateImage(std::unique_ptr<SimpleRoseekBuffer> simpleRoseekBuffer, int width, int height, QImage::Format);
 public slots:
     void paint(QPainter *painter) override;
 
 protected:
-    std::shared_ptr<QImage> qImage;
+    std::unique_ptr<SimpleRoseekBuffer> simpleRoseekBuffer;
+    QImage qImage;
     std::mutex qImageMutex;
 };
 

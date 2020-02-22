@@ -8,12 +8,15 @@
 #include <sys/timeb.h>
 #include <iostream>
 #include <thread>
-
+#include <vector>
+#include <memory>
 #include "include/WPMainCore.h"
 #include "include/CTMedia.h"
 #include "include/CTStream.h"
 #include "yuv2rgb.h"
 #include "ImageStream.h"
+#include "SimpleBuffer.h"
+
 static unsigned __stdcall ThreadMainLoop(void *pParam);
 static int util_getTimeOfDay(struct timeval *ptv);
 
@@ -23,7 +26,6 @@ typedef struct _MainContext
 	void *pEncoder;
 	void *pStreamer;
 }MainContext_t;
-
 
 int main2(int argc, char *argv[])
 {
@@ -130,7 +132,7 @@ typedef struct _RAWFrame
 	void			*pFrameBuff;
 }RAWFrame;
 
-void imageStreamThread(void *pParam, std::function<void(uint8_t*, int, int)> rgbUpdateCallback)
+void imageStreamThread(void *pParam, std::function<void(std::unique_ptr<SimpleRoseekBuffer>, int, int)> rgbUpdateCallback)
 {
 	MainContext_t *pCT = (MainContext_t*)pParam;
 	int ret;
@@ -147,9 +149,9 @@ void imageStreamThread(void *pParam, std::function<void(uint8_t*, int, int)> rgb
 	Frame.pFrameBuff = malloc(FrameBuffSize);
 	pDestBuff = malloc(DestBuffSize);
 	int rgbaBuffSize = nWidth*nHeight*4*sizeof(unsigned char);
-    unsigned char* rgbaBuffer = new unsigned char[rgbaBuffSize];
+    //unsigned char* rgbaBuffer = new unsigned char[rgbaBuffSize];
 
-    int rgbBuffSize = nWidth*nHeight*3*sizeof(unsigned char);
+    int rgbBufferSize = nWidth*nHeight*3*sizeof(unsigned char);
     
 	if (Frame.pFrameBuff == NULL || pDestBuff == NULL)
 	{
@@ -184,10 +186,11 @@ void imageStreamThread(void *pParam, std::function<void(uint8_t*, int, int)> rgb
 			}
 			//nv21_to_rgba(yuv_buf,rgb_buf,width,height);
 			//TODO: ATTENTION: delete this or make container for it
-			unsigned char* rgbBuffer = new unsigned char[rgbBuffSize];
-            nv21_to_rgb((unsigned char *) Frame.pFrameBuff,rgbBuffer,nWidth,nHeight);
+            //unsigned char* rgbBuffer = new unsigned char[rgbBuffSize];
+            std::unique_ptr<SimpleRoseekBuffer> rgbBuffer = std::make_unique<SimpleRoseekBuffer>(rgbBufferSize);
+            nv21_to_rgb((unsigned char *) Frame.pFrameBuff, rgbBuffer->data(), nWidth, nHeight);
             std::cout << "." << std::flush;
-            rgbUpdateCallback(rgbBuffer, nWidth, nHeight);
+            rgbUpdateCallback(std::move(rgbBuffer), nWidth, nHeight);
             //printf("decoded yuv to rgba");
 
 			/*

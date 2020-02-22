@@ -15,7 +15,7 @@
 #include "CameraView.h"
 #include <chrono>
 #include <memory>
-
+#include "SimpleBuffer.h"
 #include "include/WPMainCore.h"
 #include "include/CTMedia.h"
 #include "include/CTStream.h"
@@ -92,10 +92,17 @@ int main(int argc, char **argv)
     CameraView* cameraView = static_cast<CameraView*>(cameraViewQ);
 
 
-    auto updateCameraView = [&cameraView](uint8_t* rgbBuffer, int width, int height) {
+    auto updateCameraView = [&cameraView](std::unique_ptr<SimpleRoseekBuffer> simpleRoseekBuffer, int width, int height) {
         std::cout << "gonna update image" << std::endl;
-        std::shared_ptr<QImage> qImage = std::make_shared<QImage>(rgbBuffer, width, height, QImage::Format_RGB888);
-        cameraView->updateImage(qImage);
+        if (simpleRoseekBuffer) {
+            std::cout << "simpleRoseekBuffer pointer is defined" << std::endl;
+
+        } else {
+            std::cout << "simpleRoseekBuffer pointer NOT is defined" << std::endl;
+
+        }
+        //std::shared_ptr<QImage> qImage = std::make_shared<QImage>(simpleRoseekBuffer.data(), width, height, QImage::Format_RGB24);
+        cameraView->updateImage(std::move(simpleRoseekBuffer), width, height, QImage::Format_RGB888);
         QMetaObject::invokeMethod(cameraView, "update", Qt::QueuedConnection);
         std::cout << "updated image" << std::endl;
     };
