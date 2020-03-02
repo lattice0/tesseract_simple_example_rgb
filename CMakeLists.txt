@@ -12,7 +12,15 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #find_package(Qt5 COMPONENTS Core Quick REQUIRED)
-
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+endif()
+link_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/
+)
 add_executable(roseek
   main.cpp
   qml.qrc
@@ -25,14 +33,7 @@ add_library(ctmedia_codec MODULE IMPORTED)
 add_library(ctstream MODULE IMPORTED)
 add_library(maincore MODULE IMPORTED)
 
-add_library(tesseract STATIC IMPORTED)
-add_library(lept STATIC IMPORTED)
-add_library(tiffio STATIC IMPORTED)
-add_library(jpeg STATIC IMPORTED)
-add_library(png STATIC IMPORTED)
-add_library(z STATIC IMPORTED)
-add_library(zstd STATIC IMPORTED)
-add_library(lzma STATIC IMPORTED)
+
 
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/include/tesseract)
@@ -45,21 +46,116 @@ set_target_properties(maincore PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOUR
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/include/)
 
-set_target_properties(tesseract PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/libtesseract.a)
-set_target_properties(lept PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/liblept.a)
-set_target_properties(tiffio PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/libtiff.a)
-set_target_properties(jpeg PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/libjpeg.a)
-set_target_properties(png PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/libpng.a)
-set_target_properties(z PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/libz.a)
-set_target_properties(zstd PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/libzstd.a)
-set_target_properties(lzma PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/liblzma.a)
-
-
 include_directories("include")
 #target_compile_definitions(roosek2
 #  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 #target_link_libraries(roosek2
 #  PRIVATE Qt5::Core Qt5::Quick ctmedia_codec ctstream maincore ${Tesseract_LIBRARIES})
-target_link_libraries(roseek ctmedia_codec ctstream maincore tesseract lept tiffio jpeg png z zstd lzma)
+target_link_libraries(roseek ctmedia_codec ctstream maincore
+    tesseract
+    lept
+    openjp3d
+    openjpwl
+    openmj2
+    jpeg
+    pango-1.0
+    pangocairo-1.0
+    pangoft2-1.0
+    pangowin32-1.0
+    harfbuzz-gobject
+    harfbuzz-icu
+    harfbuzz-subset
+    harfbuzz
+    cairo
+    pixman-1
+    graphite2
+    glib-2.0
+    gio-2.0
+    gmodule-2.0
+    gobject-2.0
+    gthread-2.0
+    tiff
+    gif
+    webp
+    asprintf
+    charset
+    crypto
+    datrie
+    archive
+    expat
+    ffi
+    fontconfig
+    formw
+    fribidi
+    gettextlib
+    gettextpo
+    gmp
+    gmpxx
+    gnurx
+    png
+    freetype
+    openjp2
+    history
+    iconv
+    icudt
+    icuin
+    icuio
+    icutest
+    icutu
+    icuuc
+    z
+    intl
+    lcms2
+    lzma
+    panelw
+    pcre
+    pcre16
+    pcre32
+    pcrecpp
+    pcreposix
+    png16
+    readline
+    regex
+    sqlite3
+    ws2_32
+    bz2
+    ssl
+    tasn1
+    thai
+    tre
+    turbojpeg
+    zstd
+    lzo2
+    menuw
+    mpc
+    mpdec
+    mpfr
+    ncurses
+    ncurses++w
+    ncurses++w_g
+    tiffxx
+    tkstub86
+    webpdecoder
+    webpdemux
+    webpmux
+    ncursesw
+    ncursesw_g
+    bcrypt
+    systre
+    ole32
+    winmm
+    shlwapi
+    stdc++
+    user32
+    kernel32
+    gdi32
+    comdlg32
+    psapi
+    wsock32
+    hogweed
+    nettle
+    lz4
+    m
+    rpcrt4)
 #target_link_libraries(roseek ${CMAKE_CURRENT_SOURCE_DIR}/win_bin/lib/x64/WPMainCore.lib ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/libtesseract.a)
 
