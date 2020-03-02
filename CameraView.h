@@ -1,9 +1,11 @@
 #ifndef CAMERA_VIEW_H
 #define CAMERA_VIEW_H
+
 #include <QObject>
 #include <QQuickPaintedItem>
 #include <QImage>
 #include <QPainter>
+
 #include <memory>
 #include <mutex>
 #include "SimpleBuffer.h"

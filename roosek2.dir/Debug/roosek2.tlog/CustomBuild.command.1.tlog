@@ -1,0 +1,30 @@
+^C:\MSYS64\HOME\LZ\ROOSEK_OCR2\CMAKEFILES\6FFF30DB9B62151280752F9EF76847F9\QRC_QML.CPP.RULE
+setlocal
+cd C:\msys64\home\LZ\roosek_ocr2
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+C:\msys64\mingw64\bin\cmake.exe -E cmake_autorcc C:/msys64/home/LZ/roosek_ocr2/CMakeFiles/roosek2_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json Debug
+if %errorlevel% neq 0 goto :cmEnd
+C:\msys64\mingw64\bin\cmake.exe -E cmake_autorcc C:/msys64/home/LZ/roosek_ocr2/CMakeFiles/roosek2_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json Release
+if %errorlevel% neq 0 goto :cmEnd
+C:\msys64\mingw64\bin\cmake.exe -E cmake_autorcc C:/msys64/home/LZ/roosek_ocr2/CMakeFiles/roosek2_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json MinSizeRel
+if %errorlevel% neq 0 goto :cmEnd
+C:\msys64\mingw64\bin\cmake.exe -E cmake_autorcc C:/msys64/home/LZ/roosek_ocr2/CMakeFiles/roosek2_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json RelWithDebInfo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\MSYS64\HOME\LZ\ROOSEK_OCR2\CMAKELISTS.TXT
+setlocal
+C:\msys64\mingw64\bin\cmake.exe -SC:/msys64/home/LZ/roosek_ocr2 -BC:/msys64/home/LZ/roosek_ocr2 --check-stamp-file C:/msys64/home/LZ/roosek_ocr2/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

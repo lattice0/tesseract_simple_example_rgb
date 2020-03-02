@@ -1,31 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\LZ\Documents\roosek2\roosek2_autogen\mocs_compilation.cpp">
+    <ClCompile Include="C:\msys64\home\LZ\roosek_ocr2\roosek2_autogen\mocs_compilation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\LZ\Documents\roosek2\main.cpp">
+    <ClCompile Include="C:\msys64\home\LZ\roosek_ocr2\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\LZ\Documents\roosek2\roosek2_autogen\EWIEGA46WW\qrc_qml.cpp">
+    <ClCompile Include="C:\msys64\home\LZ\roosek_ocr2\ImageStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\msys64\home\LZ\roosek_ocr2\YuvUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\msys64\home\LZ\roosek_ocr2\CameraView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\msys64\home\LZ\roosek_ocr2\roosek2_autogen\EWIEGA46WW\qrc_qml.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\LZ\Documents\roosek2\CMakeFiles\d6ceafbb2aad84b2d0c3ced4c64a8d5d\qrc_qml.cpp.rule">
+    <CustomBuild Include="C:\msys64\home\LZ\roosek_ocr2\CMakeFiles\6fff30db9b62151280752f9ef76847f9\qrc_qml.cpp.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
-    <CustomBuild Include="C:\Users\LZ\Documents\roosek2\CMakeLists.txt" />
+    <CustomBuild Include="C:\msys64\home\LZ\roosek_ocr2\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="C:\Users\LZ\Documents\roosek2\qml.qrc" />
+    <None Include="C:\msys64\home\LZ\roosek_ocr2\qml.qrc" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{61AA62B5-64D5-338F-996E-96EB2C42276F}</UniqueIdentifier>
+      <UniqueIdentifier>{E2D3A5D1-63BD-3BE0-B678-909F9CDE169C}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{5E06EA16-3228-3105-84E8-479B60019338}</UniqueIdentifier>
+      <UniqueIdentifier>{6CBF9C22-DF55-3BFC-8D10-E03D6BCE25D9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

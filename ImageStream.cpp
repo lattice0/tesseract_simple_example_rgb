@@ -13,7 +13,6 @@
 #include "include/WPMainCore.h"
 #include "include/CTMedia.h"
 #include "include/CTStream.h"
-#include "yuv2rgb.h"
 #include "ImageStream.h"
 #include "SimpleBuffer.h"
 #include "YuvUtils.h"
