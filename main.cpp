@@ -6,12 +6,11 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc == 1)
-        return 1;
+    std::cout << "begin" << std::endl;
 
     tesseract::TessBaseAPI tess;
 
-    if (tess.Init("./tessdata", "eng"))
+    if (tess.Init("./languages/", "eng"))
     {
         std::cout << "OCRTesseract: Could not initialize tesseract." << std::endl;
         return 1;
@@ -22,7 +21,7 @@ int main(int argc, char *argv[])
     tess.SetVariable("save_best_choices", "T");
 
     // read image
-    auto pixs = pixRead(argv[1]);
+    auto pixs = pixRead("phototest.tif");
     if (!pixs)
     {
         std::cout << "Cannot open input file: " << argv[1] << std::endl;
@@ -39,6 +38,7 @@ int main(int argc, char *argv[])
     // cleanup
     tess.Clear();
     pixDestroy(&pixs);
+    std::cout << "end" << std::endl;
 
     return 0;
 }
