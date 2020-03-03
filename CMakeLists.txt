@@ -26,6 +26,9 @@ add_executable(roseek
   qml.qrc
   ImageStream.cpp
   YuvUtils.cpp
+  jpeg2rgb/src/jpeg_file.cpp
+  jpeg2rgb/src/rgb_file.cpp
+
   #CameraView.cpp
 )
 
@@ -38,6 +41,7 @@ add_library(maincore MODULE IMPORTED)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/include/tesseract)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/include/leptonica)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/jpeg2rgb/include)
 
 #link_directories(${CMAKE_CURRENT_SOURCE_DIR}/win_bin/lib/x64)
 set_target_properties(ctmedia_codec PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/win_bin/lib/x64/CTMedia.lib)
