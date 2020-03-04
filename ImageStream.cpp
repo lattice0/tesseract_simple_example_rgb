@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <windows.h>
+//#include <windows.h>
 #include <time.h>
-#include <process.h>
+//#include <process.h>
 #include <sys/timeb.h>
 #include <iostream>
 #include <thread>
@@ -17,7 +17,7 @@
 #include "SimpleBuffer.h"
 #include "YuvUtils.h"
 
-static unsigned __stdcall ThreadMainLoop(void *pParam);
+static unsigned ThreadMainLoop(void *pParam);
 static int util_getTimeOfDay(struct timeval *ptv);
 
 typedef struct _MainContext
@@ -95,7 +95,7 @@ int main2(int argc, char *argv[])
 	} while (0);
 
 	MainCT.m_ThreadWatch = 0;
-
+	/*
 	if (hThreadMainLoop)
 	{
 		if (WaitForSingleObject(hThreadMainLoop, 3000) == WAIT_TIMEOUT)
@@ -105,7 +105,7 @@ int main2(int argc, char *argv[])
 		CloseHandle(hThreadMainLoop);
 		hThreadMainLoop = NULL;
 	}
-
+	*/
 	if (MainCT.pEncoder)
 	{
 		Roseek_MediaEncoder_Close(MainCT.pEncoder);

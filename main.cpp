@@ -6,8 +6,8 @@
 
 
 
-#include "../include/jpeg_file.h"
-#include "../include/rgb_file.h"
+//#include "../include/jpeg_file.h"
+//#include "../include/rgb_file.h"
 
 #define VERSION "0.1"
 
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     std::cout << "begin" << std::endl;
 
     tesseract::TessBaseAPI tess;
-
+    /*
     char* jpeg_file_path = argv[1];
 
     jpeg_file* jpeg_file = load_jpeg_file(jpeg_file_path);
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     int height = rgb_file->header.height;
     int bytesPerPixel = rgb_file->header.bpp;
     int bytesPerLine = width*bytesPerPixel;
-
+    */
     if (tess.Init("./languages/", "eng"))
     {
         std::cout << "OCRTesseract: Could not initialize tesseract." << std::endl;
@@ -51,8 +51,8 @@ int main(int argc, char *argv[])
     }
 
     // recognize
-    //tess.SetImage(pixs);
-    tess.SetImage(rgbImageBuffer, width, height, bytesPerPixel, bytesPerLine);
+    tess.SetImage(pixs);
+    //tess.SetImage(rgbImageBuffer, width, height, bytesPerPixel, bytesPerLine);
     std::cout << "gonna recognize" << std::endl;
     tess.Recognize(0);
 
