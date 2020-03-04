@@ -123,6 +123,46 @@ roseek/fast:
 	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/build
 .PHONY : roseek/fast
 
+#=============================================================================
+# Target rules for targets named roseek_automoc
+
+# Build rule for target.
+roseek_automoc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 roseek_automoc
+.PHONY : roseek_automoc
+
+# fast build rule for target.
+roseek_automoc/fast:
+	$(MAKE) -f CMakeFiles/roseek_automoc.dir/build.make CMakeFiles/roseek_automoc.dir/build
+.PHONY : roseek_automoc/fast
+
+CameraView.o: CameraView.cpp.o
+
+.PHONY : CameraView.o
+
+# target to build an object file
+CameraView.cpp.o:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/CameraView.cpp.o
+.PHONY : CameraView.cpp.o
+
+CameraView.i: CameraView.cpp.i
+
+.PHONY : CameraView.i
+
+# target to preprocess a source file
+CameraView.cpp.i:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/CameraView.cpp.i
+.PHONY : CameraView.cpp.i
+
+CameraView.s: CameraView.cpp.s
+
+.PHONY : CameraView.s
+
+# target to generate assembly for a file
+CameraView.cpp.s:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/CameraView.cpp.s
+.PHONY : CameraView.cpp.s
+
 ImageStream.o: ImageStream.cpp.o
 
 .PHONY : ImageStream.o
@@ -204,6 +244,60 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+roseek_automoc.o: roseek_automoc.cpp.o
+
+.PHONY : roseek_automoc.o
+
+# target to build an object file
+roseek_automoc.cpp.o:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.cpp.o
+.PHONY : roseek_automoc.cpp.o
+
+roseek_automoc.i: roseek_automoc.cpp.i
+
+.PHONY : roseek_automoc.i
+
+# target to preprocess a source file
+roseek_automoc.cpp.i:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.cpp.i
+.PHONY : roseek_automoc.cpp.i
+
+roseek_automoc.s: roseek_automoc.cpp.s
+
+.PHONY : roseek_automoc.s
+
+# target to generate assembly for a file
+roseek_automoc.cpp.s:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.cpp.s
+.PHONY : roseek_automoc.cpp.s
+
+roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.o: roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.o
+
+.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.o
+
+# target to build an object file
+roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.o:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.o
+.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.o
+
+roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.i: roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.i
+
+.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.i
+
+# target to preprocess a source file
+roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.i:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.i
+.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.i
+
+roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.s: roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.s
+
+.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.s
+
+# target to generate assembly for a file
+roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.s:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.s
+.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -213,6 +307,10 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... roseek"
+	@echo "... roseek_automoc"
+	@echo "... CameraView.o"
+	@echo "... CameraView.i"
+	@echo "... CameraView.s"
 	@echo "... ImageStream.o"
 	@echo "... ImageStream.i"
 	@echo "... ImageStream.s"
@@ -222,6 +320,12 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... roseek_automoc.o"
+	@echo "... roseek_automoc.i"
+	@echo "... roseek_automoc.s"
+	@echo "... roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.o"
+	@echo "... roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.i"
+	@echo "... roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.s"
 .PHONY : help
 
 

@@ -149,6 +149,24 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 //C++ compiler flags for OpenMP parallization
 OpenMP_CXX_FLAGS:STRING=-fopenmp
 
+//The directory containing a CMake configuration file for Qt5Core.
+Qt5Core_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Core
+
+//The directory containing a CMake configuration file for Qt5Gui.
+Qt5Gui_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui
+
+//The directory containing a CMake configuration file for Qt5Network.
+Qt5Network_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Network
+
+//The directory containing a CMake configuration file for Qt5Qml.
+Qt5Qml_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Qml
+
+//The directory containing a CMake configuration file for Qt5Quick.
+Qt5Quick_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Quick
+
+//The directory containing a CMake configuration file for Qt5.
+Qt5_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5
+
 //The directory containing a CMake configuration file for Tesseract.
 Tesseract_DIR:PATH=Tesseract_DIR-NOTFOUND
 
