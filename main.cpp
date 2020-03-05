@@ -16,12 +16,14 @@ int main(int argc, char *argv[])
     std::cout << "begin" << std::endl;
     int rgbBufferWidth;
     int rgbBufferHeight;
-    std::string imageName = "phototest.bmp"; 
-    unsigned char *rgbBuffer = readBMP1(imageName.c_str(), &rgbBufferWidth, &rgbBufferHeight);
+    std::string imageName = "phototest_flipped.bmp"; 
+    unsigned char *rgbBuffer = readBMP2(imageName.c_str(), &rgbBufferWidth, &rgbBufferHeight);
+    //std::vector<char> rgbBufferVector = readBMP1(imageName.c_str(), &rgbBufferWidth, &rgbBufferHeight);
+    //unsigned char* rgbBuffer = (unsigned char *) rgbBufferVector.data();
     int bytesPerPixel = 3;
     int bytesPerLine = bytesPerPixel * rgbBufferWidth;
     int rgbBufferSize = rgbBufferWidth * rgbBufferHeight * 3;
-    std::cout << "readed " << imageName << ", width: " << rgbBufferWidth << " height: " << rgbBufferHeight << std::endl;
+    std::cout << "readed " << imageName << ", width: " << rgbBufferWidth << " height: " << rgbBufferHeight << " bytesPerLine: " << bytesPerLine << std::endl;
     tesseract::TessBaseAPI tess;
     
     if (tess.Init("./languages/", "eng"))
@@ -35,7 +37,7 @@ int main(int argc, char *argv[])
     tess.SetVariable("save_best_choices", "T");
 
     // read image
-    auto pixs = pixRead("phototest.tif");
+    auto pixs = pixRead("phototest.bmp");
     if (!pixs)
     {
         std::cout << "Cannot open input file: " << argv[1] << std::endl;

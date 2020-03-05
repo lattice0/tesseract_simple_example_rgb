@@ -23,11 +23,13 @@ add_executable(roseek
   libbmp/libbmp.c
   main.cpp
   qml.qrc
-  ImageStream.cpp
+  #ImageStream.cpp
   YuvUtils.cpp
   utils.cpp
   #jpeg2rgb/src/jpeg_file.cpp
   #jpeg2rgb/src/rgb_file.cpp
+  #main3.cpp
+  ImageStreamRGB.cpp
   CameraView.cpp
 )
 #find_package(TurboJPEG REQUIRED)
@@ -57,11 +59,14 @@ ELSE()
   set_target_properties(ctstream PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/libs/linux/libCTStream.so)
   set_target_properties(maincore PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/libs/linux/libWPMainCore.so)
   set_target_properties(jpegutil PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/libs/linux/libRSJpegUtil.so)
+  set_target_properties(jpegutil PROPERTIES LINK_FLAGS "-Wl,-rpath,./")
 ENDIF()
 
 include_directories("include")
 #target_compile_definitions(roosek2
 #  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(roseek PRIVATE Qt5::Core Qt5::Quick ctmedia_codec ctstream maincore jpegutil tesseract lept)# turbojpeg)
+#target_link_libraries(roseek PRIVATE Qt5::Core Qt5::Quick ctmedia_codec ctstream maincore jpegutil tesseract lept pthread)# turbojpeg)
+target_link_libraries(roseek PRIVATE Qt5::Core Qt5::Quick tesseract lept pthread)# turbojpeg)
+
 #target_link_libraries(roseek ctmedia_codec ctstream maincore jpegutil tesseract lept)
 #target_link_libraries(roseek ${CMAKE_CURRENT_SOURCE_DIR}/win_bin/lib/x64/WPMainCore.lib ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/libtesseract.a)

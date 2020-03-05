@@ -163,32 +163,32 @@ CameraView.cpp.s:
 	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/CameraView.cpp.s
 .PHONY : CameraView.cpp.s
 
-ImageStream.o: ImageStream.cpp.o
+ImageStreamRGB.o: ImageStreamRGB.cpp.o
 
-.PHONY : ImageStream.o
+.PHONY : ImageStreamRGB.o
 
 # target to build an object file
-ImageStream.cpp.o:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/ImageStream.cpp.o
-.PHONY : ImageStream.cpp.o
+ImageStreamRGB.cpp.o:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/ImageStreamRGB.cpp.o
+.PHONY : ImageStreamRGB.cpp.o
 
-ImageStream.i: ImageStream.cpp.i
+ImageStreamRGB.i: ImageStreamRGB.cpp.i
 
-.PHONY : ImageStream.i
+.PHONY : ImageStreamRGB.i
 
 # target to preprocess a source file
-ImageStream.cpp.i:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/ImageStream.cpp.i
-.PHONY : ImageStream.cpp.i
+ImageStreamRGB.cpp.i:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/ImageStreamRGB.cpp.i
+.PHONY : ImageStreamRGB.cpp.i
 
-ImageStream.s: ImageStream.cpp.s
+ImageStreamRGB.s: ImageStreamRGB.cpp.s
 
-.PHONY : ImageStream.s
+.PHONY : ImageStreamRGB.s
 
 # target to generate assembly for a file
-ImageStream.cpp.s:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/ImageStream.cpp.s
-.PHONY : ImageStream.cpp.s
+ImageStreamRGB.cpp.s:
+	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/ImageStreamRGB.cpp.s
+.PHONY : ImageStreamRGB.cpp.s
 
 YuvUtils.o: YuvUtils.cpp.o
 
@@ -338,9 +338,9 @@ help:
 	@echo "... CameraView.o"
 	@echo "... CameraView.i"
 	@echo "... CameraView.s"
-	@echo "... ImageStream.o"
-	@echo "... ImageStream.i"
-	@echo "... ImageStream.s"
+	@echo "... ImageStreamRGB.o"
+	@echo "... ImageStreamRGB.i"
+	@echo "... ImageStreamRGB.s"
 	@echo "... YuvUtils.o"
 	@echo "... YuvUtils.i"
 	@echo "... YuvUtils.s"

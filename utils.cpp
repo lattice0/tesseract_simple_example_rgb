@@ -39,7 +39,7 @@ unsigned char* readBMP(const char* filename, int* width, int* height)
 #include <vector>
 #include <iterator>
 
-unsigned char* readBMP1(const char* filename, int* width, int* height)
+std::vector<char> readBMP1(const char* filename, int* width, int* height)
 {
     static constexpr size_t HEADER_SIZE = 54;
 
@@ -78,7 +78,8 @@ unsigned char* readBMP1(const char* filename, int* width, int* height)
         //std::cout << "R: " << int(img[i] & 0xff) << " G: " << int(img[i+1] & 0xff) << " B: " << int(img[i+2] & 0xff) << std::endl;
     }
 
-    return (unsigned char* ) img.data();
+    //return (unsigned char* ) img.data();
+    return img;
 }
 
 using namespace std;
@@ -99,7 +100,7 @@ unsigned char* readBMP2(const char* filename, int* width, int* height)
         heightSign = -1;
     }
 
-    int size = 3 * *width * abs(*height);
+    int size = 3 * (*width) * abs(*height);
     unsigned char* data = new unsigned char[size]; // allocate 3 bytes per pixel
     fread(data, sizeof(unsigned char), size, f); // read the rest of the data at once
     fclose(f);
