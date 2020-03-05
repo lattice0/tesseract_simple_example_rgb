@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/user/roosek_ocr2
+CMAKE_SOURCE_DIR = /project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/user/roosek_ocr2
+CMAKE_BINARY_DIR = /project
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/roosek_ocr2/CMakeFiles /home/user/roosek_ocr2/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /project/CMakeFiles /project/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/roosek_ocr2/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /project/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,111 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named roseek
+# Target rules for targets named tesseract_example
 
 # Build rule for target.
-roseek: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 roseek
-.PHONY : roseek
+tesseract_example: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tesseract_example
+.PHONY : tesseract_example
 
 # fast build rule for target.
-roseek/fast:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/build
-.PHONY : roseek/fast
-
-#=============================================================================
-# Target rules for targets named roseek_automoc
-
-# Build rule for target.
-roseek_automoc: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 roseek_automoc
-.PHONY : roseek_automoc
-
-# fast build rule for target.
-roseek_automoc/fast:
-	$(MAKE) -f CMakeFiles/roseek_automoc.dir/build.make CMakeFiles/roseek_automoc.dir/build
-.PHONY : roseek_automoc/fast
-
-CameraView.o: CameraView.cpp.o
-
-.PHONY : CameraView.o
-
-# target to build an object file
-CameraView.cpp.o:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/CameraView.cpp.o
-.PHONY : CameraView.cpp.o
-
-CameraView.i: CameraView.cpp.i
-
-.PHONY : CameraView.i
-
-# target to preprocess a source file
-CameraView.cpp.i:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/CameraView.cpp.i
-.PHONY : CameraView.cpp.i
-
-CameraView.s: CameraView.cpp.s
-
-.PHONY : CameraView.s
-
-# target to generate assembly for a file
-CameraView.cpp.s:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/CameraView.cpp.s
-.PHONY : CameraView.cpp.s
-
-ImageStreamRGB.o: ImageStreamRGB.cpp.o
-
-.PHONY : ImageStreamRGB.o
-
-# target to build an object file
-ImageStreamRGB.cpp.o:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/ImageStreamRGB.cpp.o
-.PHONY : ImageStreamRGB.cpp.o
-
-ImageStreamRGB.i: ImageStreamRGB.cpp.i
-
-.PHONY : ImageStreamRGB.i
-
-# target to preprocess a source file
-ImageStreamRGB.cpp.i:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/ImageStreamRGB.cpp.i
-.PHONY : ImageStreamRGB.cpp.i
-
-ImageStreamRGB.s: ImageStreamRGB.cpp.s
-
-.PHONY : ImageStreamRGB.s
-
-# target to generate assembly for a file
-ImageStreamRGB.cpp.s:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/ImageStreamRGB.cpp.s
-.PHONY : ImageStreamRGB.cpp.s
-
-YuvUtils.o: YuvUtils.cpp.o
-
-.PHONY : YuvUtils.o
-
-# target to build an object file
-YuvUtils.cpp.o:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/YuvUtils.cpp.o
-.PHONY : YuvUtils.cpp.o
-
-YuvUtils.i: YuvUtils.cpp.i
-
-.PHONY : YuvUtils.i
-
-# target to preprocess a source file
-YuvUtils.cpp.i:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/YuvUtils.cpp.i
-.PHONY : YuvUtils.cpp.i
-
-YuvUtils.s: YuvUtils.cpp.s
-
-.PHONY : YuvUtils.s
-
-# target to generate assembly for a file
-YuvUtils.cpp.s:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/YuvUtils.cpp.s
-.PHONY : YuvUtils.cpp.s
+tesseract_example/fast:
+	$(MAKE) -f CMakeFiles/tesseract_example.dir/build.make CMakeFiles/tesseract_example.dir/build
+.PHONY : tesseract_example/fast
 
 main.o: main.cpp.o
 
@@ -223,7 +129,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/tesseract_example.dir/build.make CMakeFiles/tesseract_example.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -232,7 +138,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/tesseract_example.dir/build.make CMakeFiles/tesseract_example.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -241,62 +147,8 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/tesseract_example.dir/build.make CMakeFiles/tesseract_example.dir/main.cpp.s
 .PHONY : main.cpp.s
-
-roseek_automoc.o: roseek_automoc.cpp.o
-
-.PHONY : roseek_automoc.o
-
-# target to build an object file
-roseek_automoc.cpp.o:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.cpp.o
-.PHONY : roseek_automoc.cpp.o
-
-roseek_automoc.i: roseek_automoc.cpp.i
-
-.PHONY : roseek_automoc.i
-
-# target to preprocess a source file
-roseek_automoc.cpp.i:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.cpp.i
-.PHONY : roseek_automoc.cpp.i
-
-roseek_automoc.s: roseek_automoc.cpp.s
-
-.PHONY : roseek_automoc.s
-
-# target to generate assembly for a file
-roseek_automoc.cpp.s:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.cpp.s
-.PHONY : roseek_automoc.cpp.s
-
-roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.o: roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.o
-
-.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.o
-
-# target to build an object file
-roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.o:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.o
-.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.o
-
-roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.i: roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.i
-
-.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.i
-
-# target to preprocess a source file
-roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.i:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.i
-.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.i
-
-roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.s: roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.s
-
-.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.s
-
-# target to generate assembly for a file
-roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.s:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.s
-.PHONY : roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.cpp.s
 
 utils.o: utils.cpp.o
 
@@ -304,7 +156,7 @@ utils.o: utils.cpp.o
 
 # target to build an object file
 utils.cpp.o:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/utils.cpp.o
+	$(MAKE) -f CMakeFiles/tesseract_example.dir/build.make CMakeFiles/tesseract_example.dir/utils.cpp.o
 .PHONY : utils.cpp.o
 
 utils.i: utils.cpp.i
@@ -313,7 +165,7 @@ utils.i: utils.cpp.i
 
 # target to preprocess a source file
 utils.cpp.i:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/utils.cpp.i
+	$(MAKE) -f CMakeFiles/tesseract_example.dir/build.make CMakeFiles/tesseract_example.dir/utils.cpp.i
 .PHONY : utils.cpp.i
 
 utils.s: utils.cpp.s
@@ -322,7 +174,7 @@ utils.s: utils.cpp.s
 
 # target to generate assembly for a file
 utils.cpp.s:
-	$(MAKE) -f CMakeFiles/roseek.dir/build.make CMakeFiles/roseek.dir/utils.cpp.s
+	$(MAKE) -f CMakeFiles/tesseract_example.dir/build.make CMakeFiles/tesseract_example.dir/utils.cpp.s
 .PHONY : utils.cpp.s
 
 # Help Target
@@ -333,26 +185,10 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... roseek"
-	@echo "... roseek_automoc"
-	@echo "... CameraView.o"
-	@echo "... CameraView.i"
-	@echo "... CameraView.s"
-	@echo "... ImageStreamRGB.o"
-	@echo "... ImageStreamRGB.i"
-	@echo "... ImageStreamRGB.s"
-	@echo "... YuvUtils.o"
-	@echo "... YuvUtils.i"
-	@echo "... YuvUtils.s"
+	@echo "... tesseract_example"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... roseek_automoc.o"
-	@echo "... roseek_automoc.i"
-	@echo "... roseek_automoc.s"
-	@echo "... roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.o"
-	@echo "... roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.i"
-	@echo "... roseek_automoc.dir/qrc_qml_MDHIZXVMUCSDDN.s"
 	@echo "... utils.o"
 	@echo "... utils.i"
 	@echo "... utils.s"

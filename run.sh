@@ -1,0 +1,1 @@
+sudo docker run -it -v $PWD:/project tesseract_example /bin/bash
