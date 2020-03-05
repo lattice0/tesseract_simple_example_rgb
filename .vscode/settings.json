@@ -61,6 +61,7 @@
         "string": "cpp",
         "fstream": "cpp",
         "mutex": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "map": "cpp"
     }
 }

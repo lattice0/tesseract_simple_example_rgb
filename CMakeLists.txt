@@ -17,17 +17,20 @@ find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 link_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/
 )
+include_directories(libbpm/)
 SET(CMAKE_INSTALL_RPATH "${CMAKE_CURRENT_SOURCE_DIR}/libs/linux/")
 add_executable(roseek
+  libbmp/libbmp.c
   main.cpp
   qml.qrc
   ImageStream.cpp
   YuvUtils.cpp
+  utils.cpp
   #jpeg2rgb/src/jpeg_file.cpp
   #jpeg2rgb/src/rgb_file.cpp
-
   CameraView.cpp
 )
+#find_package(TurboJPEG REQUIRED)
 
 add_library(ctmedia_codec MODULE IMPORTED)
 add_library(ctstream MODULE IMPORTED)
@@ -59,6 +62,6 @@ ENDIF()
 include_directories("include")
 #target_compile_definitions(roosek2
 #  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(roseek PRIVATE Qt5::Core Qt5::Quick ctmedia_codec ctstream maincore jpegutil tesseract lept)
+target_link_libraries(roseek PRIVATE Qt5::Core Qt5::Quick ctmedia_codec ctstream maincore jpegutil tesseract lept)# turbojpeg)
 #target_link_libraries(roseek ctmedia_codec ctstream maincore jpegutil tesseract lept)
 #target_link_libraries(roseek ${CMAKE_CURRENT_SOURCE_DIR}/win_bin/lib/x64/WPMainCore.lib ${CMAKE_CURRENT_SOURCE_DIR}/mingw-w64-x86_64-static-tesseract/lib/libtesseract.a)

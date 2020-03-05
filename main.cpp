@@ -2,36 +2,28 @@
 #include <memory>
 
 #include <allheaders.h> // leptonica main header for image io
-#include <baseapi.h> // tesseract main header
-
-
+#include <baseapi.h>    // tesseract main header
+#include "libbmp/libbmp.h"
+#include "utils.h"
 
 //#include "../include/jpeg_file.h"
 //#include "../include/rgb_file.h"
 
 #define VERSION "0.1"
 
-
-
-
-
 int main(int argc, char *argv[])
 {
     std::cout << "begin" << std::endl;
-
+    int rgbBufferWidth;
+    int rgbBufferHeight;
+    std::string imageName = "phototest.bmp"; 
+    unsigned char *rgbBuffer = readBMP1(imageName.c_str(), &rgbBufferWidth, &rgbBufferHeight);
+    int bytesPerPixel = 3;
+    int bytesPerLine = bytesPerPixel * rgbBufferWidth;
+    int rgbBufferSize = rgbBufferWidth * rgbBufferHeight * 3;
+    std::cout << "readed " << imageName << ", width: " << rgbBufferWidth << " height: " << rgbBufferHeight << std::endl;
     tesseract::TessBaseAPI tess;
-    /*
-    char* jpeg_file_path = argv[1];
-
-    jpeg_file* jpeg_file = load_jpeg_file(jpeg_file_path);
-    rgb_file* rgb_file = decode_jpeg_to_rgb(jpeg_file);
-    uint8_t* rgbImageBuffer = rgb_file->rgb_buffer;
-    size_t rgbImageBufferSize = rgb_file->rgb_buffer_size;
-    int width = rgb_file->header.width;
-    int height = rgb_file->header.height;
-    int bytesPerPixel = rgb_file->header.bpp;
-    int bytesPerLine = width*bytesPerPixel;
-    */
+    
     if (tess.Init("./languages/", "eng"))
     {
         std::cout << "OCRTesseract: Could not initialize tesseract." << std::endl;
@@ -51,8 +43,8 @@ int main(int argc, char *argv[])
     }
 
     // recognize
-    tess.SetImage(pixs);
-    //tess.SetImage(rgbImageBuffer, width, height, bytesPerPixel, bytesPerLine);
+    //tess.SetImage(pixs);
+    tess.SetImage((const unsigned char*)rgbBuffer, rgbBufferWidth, rgbBufferHeight, bytesPerPixel, bytesPerLine);
     std::cout << "gonna recognize" << std::endl;
     tess.Recognize(0);
 
